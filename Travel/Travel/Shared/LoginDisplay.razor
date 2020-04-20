@@ -1,0 +1,18 @@
+﻿@namespace Travel.Shared
+
+<AuthorizeView>
+    <Authorized>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="/Profile">Hello, @context.User.Identity.Name!</a></li>
+        <form method="post" action="Identity/Account/LogOut">
+            <button type="submit" class="nav-link btn btn-link">Log out</button>
+        </form>
+    </Authorized>
+    <NotAuthorized>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="Identity/Account/Register">Register</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="Identity/Account/Login">Login</a></li>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+}
