@@ -1,0 +1,25 @@
+﻿
+    <div class="photo-card">
+        <div class="photo-background" style="background-image:url('@PictureLocation');"></div>
+        <div class="photo-details">
+            <h1>@Name</h1>
+            <p>
+                @Details
+            </p>
+            <div class="photo-tags">
+                <ul>
+                    <li><a href="#">More Details</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+@code {
+
+    public string Name { get; set; }
+
+    public string PictureLocation { get; set; }
+
+    public string Details { get; set; }
+
+}

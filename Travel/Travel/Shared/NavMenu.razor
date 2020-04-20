@@ -1,0 +1,48 @@
+﻿
+<img src="IMG/Logo.png" width="50" height="50" style="margin-bottom:0" />
+<a class="navbar-brand logo" href="#">
+    Traveller
+</a>
+<button data-toggle="collapse" class="@ButtonMenuCssClass" data-target="#navbarNav" @onclick="ToggleNavMenu">
+    <span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span>
+</button>
+
+
+<div class="@NavMenuCssClass" id="navbarNav">
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item" role="presentation"><a class="nav-link active" @onclick="CloseNavMenu" href="/">Home</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" @onclick="CloseNavMenu" href="/trips">Trips</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" @onclick="CloseNavMenu" href="/about">About</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" @onclick="CloseNavMenu" href="/Profile">Profile</a></li>
+    </ul>
+</div>
+
+@code {
+
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse navbar-collapse" : "navbar-collapse collapse show";
+
+    private string ButtonMenuCssClass => collapseNavMenu ? "navbar-toggler collapsed" : "navbar-toggler";
+
+    private string ButtonAriaExpanded => collapseNavMenu ? "false" : "true";
+
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+
+
+    }
+
+    /// <summary>
+    /// Close the Menu after choose anything from the navmenu
+    /// </summary>
+    private void CloseNavMenu()
+    {
+        if(collapseNavMenu == false)
+        {
+            collapseNavMenu = !collapseNavMenu;
+        }
+    }
+}
