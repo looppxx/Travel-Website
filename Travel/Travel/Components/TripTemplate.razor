@@ -1,4 +1,4 @@
-﻿
+﻿@using Travel.Components
     <div class="photo-card">
         <div class="photo-background" style="background-image:url('@PictureLocation');"></div>
         <div class="photo-details">
@@ -8,7 +8,7 @@
             </p>
             <div class="photo-tags">
                 <ul>
-                    <li><a href="#">More Details</a></li>
+                    <li><a href="/trip/@Trip.Id">More Details</a></li>
                 </ul>
             </div>
         </div>
@@ -16,10 +16,22 @@
 
 @code {
 
+    [Parameter]
+    public Travel.Areas.Identity.Data.Trip Trip { get; set; }
+
     public string Name { get; set; }
 
     public string PictureLocation { get; set; }
 
-    public string Details { get; set; }
+    public string  Details { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Name = Trip.Name;
+        PictureLocation = Trip.PictureLocation;
+        Details = System.IO.File.ReadAllText(Trip.Details);
+    }
+
+
 
 }

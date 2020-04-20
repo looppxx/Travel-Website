@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Travel.Areas.Identity.Data;
 using Travel.Data;
+using Travel.Interfaces;
+using Travel.Services;
 
 [assembly: HostingStartup(typeof(Travel.Areas.Identity.IdentityHostingStartup))]
 namespace Travel.Areas.Identity
@@ -27,6 +29,8 @@ namespace Travel.Areas.Identity
 
                 services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
+
+                services.AddScoped<ITripDataService, TripDataService>();
 
                 services.Configure<IdentityOptions>(options =>
                 {

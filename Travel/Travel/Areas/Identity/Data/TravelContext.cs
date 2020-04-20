@@ -11,6 +11,8 @@ namespace Travel.Data
 {
     public class TravelContext : IdentityDbContext<Person>
     {
+        public DbSet<Trip> Trips { get; set; }
+
         public TravelContext(DbContextOptions<TravelContext> options)
             : base(options)
         {

@@ -1,5 +1,12 @@
 ﻿@page "/trips"
-@using Travel.Components; 
+@using Travel.Components;
+@using Travel.Interfaces
+@using Travel.Services
+@using Travel.Areas.Identity.Data
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject ITripDataService TripService
+
+
 
 
 <section class="portfolio-block projects-cards">
@@ -8,19 +15,25 @@
             <h2>Avilable trips</h2>
         </div>
         <div class="row">
-            @for (int i = 0; i < 20; i++)
+            @foreach (Travel.Areas.Identity.Data.Trip trip in AllTrips)
             {
                 <div class="row-cols-md-6 col-lg-4">
-                    <TripTemplate/>
+                    <TripTemplate Trip=@trip />
                     <div style="margin-bottom:15px" />
                 </div>
-
             }
+           
         </div>
     </div>
 
 </section>
 
 @code {
-    
+
+    private List<Travel.Areas.Identity.Data.Trip> AllTrips { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllTrips = await TripService.GetAllTripsAsync();
+    }
 }

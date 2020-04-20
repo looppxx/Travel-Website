@@ -1,7 +1,72 @@
-﻿@page "/trip/{id:int}"
+﻿@page "/trip/{Id:int}"
+@using Travel.Interfaces
+@inject ITripDataService TripService
+@inject NavigationManager NavigationManager
 
-<h3>Trip</h3>
+
+
+<section class="portfolio-block project">
+    <div class="container">
+        <div class="heading">
+            <h2>@TripName</h2>
+        </div>
+        <div class="image" style="background-image:url('@PictureLocation');"></div>
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-1 info">
+                <h3>Description</h3>
+                <p>@TripDetails</p>
+            </div>
+            <div class="col-12 col-md-3 offset-md-1 meta">
+                <div class="tags">
+                    <span class="meta-heading">Price: @TripPrice $</span>
+                    <span class="meta-heading">Country: @TripCountry</span>
+                    <span class="meta-heading">City: @TripCity</span>
+                    <span class="meta-heading">Date : @TripDate</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 @code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public Travel.Areas.Identity.Data.Trip ATrip { get; set; }
+
+    public string TripName { get; set; }
+
+    public string PictureLocation { get; set; }
+
+    public string TripCountry { get; set; }
+
+    public string TripCity { get; set; }
+
+    public string TripDate { get; set; }
+
+    public string TripDetails { get; set; }
+
+    public string TripPrice { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        ATrip = await TripService.GetTrip(Id);
+        if (ATrip != null)
+        {
+            TripName = ATrip.Name;
+            PictureLocation = ATrip.PictureLocation;
+            TripCountry = ATrip.Country;
+            TripCity = ATrip.City;
+            TripDate = ATrip.Date.ToString();
+            TripDetails = System.IO.File.ReadAllText(ATrip.Details);
+            TripPrice = ATrip.Price.ToString();
+        }
+        else
+        {
+            NavigationManager.NavigateTo("/trips");
+        }
+    }
+
 
 }
