@@ -1,10 +1,139 @@
 ﻿@page "/profile"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Travel.Areas.Identity.Data
+@using Travel.Interfaces;
+@inject IPersonDataService PersonData
+@inject NavigationManager NavigationManager
 
-<div class="container">
-    <h3>Profile</h3>
-</div>
-
-
+<AuthorizeView>
+    <Authorized>
+        <section class="portfolio-block block-intro border-bottom">
+            <div class="container">
+                <div class="about-me">
+                    <p>Hello! @FistName</p>
+                </div>
+            </div>
+        </section>
+        <section class="portfolio-block cv">
+            <div class="container">
+                <div class="work-experience group">
+                    <div class="heading">
+                        <h2 class="text-center">Your booked Trips</h2>
+                    </div>
+                </div>
+                <div class="education group">
+                    <div class="heading">
+                        <h2 class="text-center">Your previous trips</h2>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="contact-info portfolio-info-card">
+                                <h2>Contact Info</h2>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <img src="IMG/Business man-icon.png" width="25" height="25" />
+                                    </div>
+                                    <div class="col-9"><span>@FistName @LastName</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <img src="IMG/Contact-icon.png" width="25" height="25"/>
+                                    </div>
+                                    <div class="col-9"><span>@PhoneNumber</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <img src="IMG/Mail-icon.png" width="25" height="25"/>
+                                    </div>
+                                    <div class="col-9"><span>@Email</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1">
+                                        <img src="IMG/Location-icon.png" width="25" height="25"/>
+                                    </div>
+                                    <div class="col-9"><span>@Country , @City</span></div>
+                                </div><a href="/additionalinformation">Edit your Information</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </Authorized>
+    <NotAuthorized>
+        <AuthorizationRequired />
+    </NotAuthorized>
+</AuthorizeView>
 @code {
+
+    private string FistName { get; set; }
+    private string LastName { get; set; }
+
+    private bool Male { get; set; }
+    private bool Female { get; set; }
+
+    private string Gender { get; set; }
+
+    private string PhoneNumber { get; set; }
+
+    private string Email { get; set; }
+
+    private string Country { get; set; }
+    private string City { get; set; }
+
+    private AuthenticationState authState { get; set; }
+
+    private Person person { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+
+            person = await PersonData.GetPerson(userName: user.Identity.Name);
+
+            FistName = person.FirstName;
+            LastName = person.LastName;
+
+            if (person.Gender == "Male")
+            {
+                Male = true;
+                Female = false;
+            }
+            else if (person.Gender == "Female")
+            {
+                Male = false;
+                Female = true;
+            }
+            else
+            {
+                Male = false;
+                Female = false;
+            }
+
+            PhoneNumber = person.PhoneNumber;
+
+            Email = person.Email;
+
+            Country = person.Country;
+
+            City = person.City;
+        }
+
+
+    }
+
+    public void EditAdditionalInformation()
+    {
+        NavigationManager.NavigateTo("additionalinformation", true);
+    }
+
+
 
 }
