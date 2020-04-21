@@ -23,14 +23,23 @@ namespace Travel.Areas.Identity
                 services.AddDbContext<TravelContext>(options =>
                     options.UseSqlite(
                         context.Configuration.GetConnectionString("TravelContextConnection")));
+               
+               /*
+            builder.ConfigureServices((context, services) => {
+                services.AddDbContext<TravelContext>(options =>
+                    options.UseSqlServer(
+                        context.Configuration.GetConnectionString("SqlServerConnectionString")));
+                */
 
                 services.AddDefaultIdentity<Person>(options => options.SignIn.RequireConfirmedAccount = false)
                     .AddEntityFrameworkStores<TravelContext>();
-
+                    
                 services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
 
 
                 services.AddScoped<ITripDataService, TripDataService>();
+                services.AddScoped<IPersonDataService, PersonDataService>();
+
 
                 services.Configure<IdentityOptions>(options =>
                 {

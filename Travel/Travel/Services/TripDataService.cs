@@ -16,10 +16,12 @@ namespace Travel.Services
         public TripDataService(TravelContext travelContext)
         {
             this.travelContext = travelContext;
+            
         }
 
         public async Task<List<Trip>> GetAllTripsAsync()
         {
+            Person person = travelContext.Users.FirstOrDefault(x => x.FirstName == "s");
             return await travelContext.Trips.ToListAsync().ConfigureAwait(false);
         }
 

@@ -99,7 +99,7 @@ namespace Travel.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return LocalRedirect("~/additionalinformation");
                     }
                 }
                 foreach (var error in result.Errors)

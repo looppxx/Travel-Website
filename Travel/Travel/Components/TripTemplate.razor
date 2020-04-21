@@ -4,7 +4,7 @@
         <div class="photo-details">
             <h1>@Name</h1>
             <p>
-                @Details
+                @TripShortDescription
             </p>
             <div class="photo-tags">
                 <ul>
@@ -23,13 +23,13 @@
 
     public string PictureLocation { get; set; }
 
-    public string  Details { get; set; }
+    public string  TripShortDescription { get; set; }
 
     protected override void OnInitialized()
     {
         Name = Trip.Name;
         PictureLocation = Trip.PictureLocation;
-        Details = System.IO.File.ReadAllText(Trip.Details);
+        TripShortDescription = Trip.ShortDescription;
     }
 
 

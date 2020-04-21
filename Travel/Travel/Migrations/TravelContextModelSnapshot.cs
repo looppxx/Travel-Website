@@ -14,7 +14,7 @@ namespace Travel.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1");
+                .HasAnnotation("ProductVersion", "3.1.3");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -156,9 +156,17 @@ namespace Travel.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("City")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT")
@@ -166,6 +174,18 @@ namespace Travel.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
@@ -238,13 +258,22 @@ namespace Travel.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(200);
 
+                    b.Property<string>("PersonId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("PictureLocation")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ShortDescription")
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(200);
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Trips");
                 });
@@ -298,6 +327,13 @@ namespace Travel.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Travel.Areas.Identity.Data.Trip", b =>
+                {
+                    b.HasOne("Travel.Areas.Identity.Data.Person", null)
+                        .WithMany("Trips")
+                        .HasForeignKey("PersonId");
                 });
 #pragma warning restore 612, 618
         }

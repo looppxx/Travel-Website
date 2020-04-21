@@ -15,7 +15,11 @@ namespace Travel.Areas.Identity.Data
         [MaxLength(200)]
         public string Name { get; set; }
 
+        [MaxLength(200)]
+        public string ShortDescription { get; set; }
+
         public string PictureLocation { get; set; }
+
 
         [MaxLength(200)]
         public string Country { get; set; }
