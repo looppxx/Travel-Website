@@ -8,8 +8,9 @@ namespace Travel.Areas.Identity.Data
 {
     public class Trip
     {
+
         [Required]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MaxLength(200)]
@@ -33,5 +34,8 @@ namespace Travel.Areas.Identity.Data
         public string Details { get; set; }
 
         public decimal Price { get; set; }
+
+        public List<PersonTrip> PersonTrips { get; set; }
+
     }
 }

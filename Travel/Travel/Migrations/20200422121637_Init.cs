@@ -52,6 +52,25 @@ namespace Travel.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Trips",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 200, nullable: false),
+                    ShortDescription = table.Column<string>(maxLength: 200, nullable: true),
+                    PictureLocation = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(maxLength: 200, nullable: true),
+                    City = table.Column<string>(maxLength: 200, nullable: true),
+                    Date = table.Column<DateTime>(maxLength: 50, nullable: false),
+                    Details = table.Column<string>(nullable: true),
+                    Price = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Trips", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -158,30 +177,27 @@ namespace Travel.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Trips",
+                name: "PeopleTrips",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(maxLength: 200, nullable: false),
-                    ShortDescription = table.Column<string>(maxLength: 200, nullable: true),
-                    PictureLocation = table.Column<string>(nullable: true),
-                    Country = table.Column<string>(maxLength: 200, nullable: true),
-                    City = table.Column<string>(maxLength: 200, nullable: true),
-                    Date = table.Column<DateTime>(maxLength: 50, nullable: false),
-                    Details = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
-                    PersonId = table.Column<string>(nullable: true)
+                    TripId = table.Column<string>(nullable: false),
+                    PersonId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Trips", x => x.Id);
+                    table.PrimaryKey("PK_PeopleTrips", x => new { x.TripId, x.PersonId });
                     table.ForeignKey(
-                        name: "FK_Trips_AspNetUsers_PersonId",
+                        name: "FK_PeopleTrips_AspNetUsers_PersonId",
                         column: x => x.PersonId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PeopleTrips_Trips_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Trips",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -222,8 +238,8 @@ namespace Travel.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Trips_PersonId",
-                table: "Trips",
+                name: "IX_PeopleTrips_PersonId",
+                table: "PeopleTrips",
                 column: "PersonId");
         }
 
@@ -245,13 +261,16 @@ namespace Travel.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Trips");
+                name: "PeopleTrips");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Trips");
         }
     }
 }

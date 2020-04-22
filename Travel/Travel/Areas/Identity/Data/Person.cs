@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
@@ -26,6 +27,6 @@ namespace Travel.Areas.Identity.Data
         [MaxLength(50)]
         public string City { get; set; }
 
-        public List<Trip> Trips { get; set; }
+        public List<PersonTrip> PersonTrips { get; set; }
     }
 }

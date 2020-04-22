@@ -26,15 +26,12 @@ namespace Travel.Services
         }
 
         
-        public async Task<Trip> GetTrip(int Id)
+        public async Task<Trip> GetTrip(string Id)
         {
+
             return await travelContext.Trips.FirstOrDefaultAsync(x => x.Id == Id);
         }
 
-        public async Task<Trip> GetTrip(string Name)
-        {
-            return await travelContext.Trips.FirstOrDefaultAsync(x => x.Name == Name);
-        }
         
     }
 }

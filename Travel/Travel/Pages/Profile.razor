@@ -2,7 +2,9 @@
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @using Travel.Areas.Identity.Data
 @using Travel.Interfaces;
+@using Travel.Components;
 @inject IPersonDataService PersonData
+@inject IPersonTripDataService PerosnTripService
 @inject NavigationManager NavigationManager
 
 <AuthorizeView>
@@ -14,18 +16,28 @@
                 </div>
             </div>
         </section>
-        <section class="portfolio-block cv">
+        <section class="portfolio-block projects-cards">
             <div class="container">
-                <div class="work-experience group">
-                    <div class="heading">
-                        <h2 class="text-center">Your booked Trips</h2>
-                    </div>
+                <div class="heading">
+                    <h2>Your booked Trips</h2>
                 </div>
-                <div class="education group">
-                    <div class="heading">
-                        <h2 class="text-center">Your previous trips</h2>
-                    </div>
+                <div class="row">
+                    @if (ATrips.Count > 0)
+                    {
+                        @foreach (Travel.Areas.Identity.Data.Trip trip in ATrips)
+                        {
+                            <div class="row-cols-md-6 col-lg-4">
+                                <TripTemplate Trip=@trip />
+                                <div style="margin-bottom:15px" />
+                            </div>
+                        }
+                    }
                 </div>
+            </div>
+
+        </section>
+        <section class="portfolio-block projects-cards">
+            <div class="container">
                 <div class="group">
                     <div class="row">
                         <div class="col-md-6">
@@ -39,19 +51,19 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <img src="IMG/Contact-icon.png" width="25" height="25"/>
+                                        <img src="IMG/Contact-icon.png" width="25" height="25" />
                                     </div>
                                     <div class="col-9"><span>@PhoneNumber</span></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <img src="IMG/Mail-icon.png" width="25" height="25"/>
+                                        <img src="IMG/Mail-icon.png" width="25" height="25" />
                                     </div>
                                     <div class="col-9"><span>@Email</span></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-1">
-                                        <img src="IMG/Location-icon.png" width="25" height="25"/>
+                                        <img src="IMG/Location-icon.png" width="25" height="25" />
                                     </div>
                                     <div class="col-9"><span>@Country , @City</span></div>
                                 </div><a href="/additionalinformation">Edit your Information</a>
@@ -82,6 +94,9 @@
 
     private string Country { get; set; }
     private string City { get; set; }
+
+    private List<Travel.Areas.Identity.Data.Trip> ATrips { get; set; }
+
 
     private AuthenticationState authState { get; set; }
 
@@ -124,6 +139,9 @@
             Country = person.Country;
 
             City = person.City;
+
+            ATrips = new List<Areas.Identity.Data.Trip>();
+            ATrips = PerosnTripService.GetTrips(person);
         }
 
 

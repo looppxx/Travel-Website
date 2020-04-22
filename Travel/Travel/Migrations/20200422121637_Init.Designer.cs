@@ -9,7 +9,7 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelContext))]
-    [Migration("20200421111912_Init")]
+    [Migration("20200422121637_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -234,11 +234,25 @@ namespace Travel.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Travel.Areas.Identity.Data.PersonTrip", b =>
+                {
+                    b.Property<string>("TripId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PersonId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("TripId", "PersonId");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("PeopleTrips");
+                });
+
             modelBuilder.Entity("Travel.Areas.Identity.Data.Trip", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("City")
                         .HasColumnType("TEXT")
@@ -260,9 +274,6 @@ namespace Travel.Migrations
                         .HasColumnType("TEXT")
                         .HasMaxLength(200);
 
-                    b.Property<string>("PersonId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("PictureLocation")
                         .HasColumnType("TEXT");
 
@@ -274,8 +285,6 @@ namespace Travel.Migrations
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
 
                     b.ToTable("Trips");
                 });
@@ -331,11 +340,19 @@ namespace Travel.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Travel.Areas.Identity.Data.Trip", b =>
+            modelBuilder.Entity("Travel.Areas.Identity.Data.PersonTrip", b =>
                 {
-                    b.HasOne("Travel.Areas.Identity.Data.Person", null)
-                        .WithMany("Trips")
-                        .HasForeignKey("PersonId");
+                    b.HasOne("Travel.Areas.Identity.Data.Person", "Person")
+                        .WithMany("PersonTrips")
+                        .HasForeignKey("PersonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Travel.Areas.Identity.Data.Trip", "Trip")
+                        .WithMany("PersonTrips")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -39,6 +39,8 @@ namespace Travel.Areas.Identity
 
                 services.AddScoped<ITripDataService, TripDataService>();
                 services.AddScoped<IPersonDataService, PersonDataService>();
+                services.AddScoped<IPersonTripDataService, PersonTripDataService>();
+
 
 
                 services.Configure<IdentityOptions>(options =>

@@ -16,14 +16,8 @@ namespace Travel.Interfaces
         /// </summary>
         /// <param name="Id">the id of the trip</param>
         /// <returns></returns>
-        Task<Trip> GetTrip(int Id);
+        Task<Trip> GetTrip(string Id);
 
-        /// <summary>
-        /// Get Trip By name
-        /// </summary>
-        /// <param name="Name"></param>
-        /// <returns></returns>
-        Task<Trip> GetTrip(string Name);
 
     
     }

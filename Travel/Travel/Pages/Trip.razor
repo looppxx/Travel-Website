@@ -1,7 +1,13 @@
-﻿@page "/trip/{Id:int}"
+﻿@page "/trip/{Id}"
 @using Travel.Interfaces
-@inject ITripDataService TripService
+@using Travel.Areas.Identity.Data
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IPersonDataService PersonData
+@inject ITripDataService TripService
+@inject IPersonTripDataService PerosnTripService
+
+
 
 
 
@@ -24,6 +30,11 @@
                     <span class="meta-heading">City: @TripCity</span>
                     <span class="meta-heading">Date : @TripDate</span>
                 </div>
+                <button class="btn btn-primary btn-block btn-group-sm" @onclick="Book" type="button">@BookText</button>
+                @if (BookText == "Booked")
+                {
+                    <button class="btn btn-outline-primary btn-block" @onclick="Unbook" >Unbook</button>
+                }
             </div>
         </div>
     </div>
@@ -32,7 +43,7 @@
 @code {
 
     [Parameter]
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     public Travel.Areas.Identity.Data.Trip ATrip { get; set; }
 
@@ -52,8 +63,19 @@
 
     public string TripPrice { get; set; }
 
+
+
+    private AuthenticationState authState { get; set; }
+
+    private Person Person { get; set; }
+
+    public string BookText { get; set; }
+
+
     protected override async Task OnInitializedAsync()
     {
+
+
         ATrip = await TripService.GetTrip(Id);
         if (ATrip != null)
         {
@@ -65,12 +87,96 @@
             TripShortDescription = ATrip.ShortDescription;
             TripDetails = System.IO.File.ReadAllText(ATrip.Details);
             TripPrice = ATrip.Price.ToString();
+
+
+            if (await IsAuthenticated())
+            {
+                Person = await GetCurrentPerson();
+
+                if (IsPeronIsBookingThisTrip(Person))
+                {
+                    BookText = "Booked";
+                }
+                else
+                {
+                    BookText = "Book";
+
+                }
+
+            }
+            else
+            {
+                BookText = "Login to book";
+
+            }
+
         }
         else
         {
-            NavigationManager.NavigateTo("/trips");
+            NavigationManager.NavigateTo("trips");
         }
     }
 
+    protected async Task<Boolean> IsAuthenticated()
+    {
+        authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
 
+        return user.Identity.IsAuthenticated;
+    }
+
+    protected async Task<Person> GetCurrentPerson()
+    {
+        var user = authState.User;
+        return await PersonData.GetPerson(userName: user.Identity.Name);
+
+    }
+
+    protected Boolean IsPeronIsBookingThisTrip(Person person)
+    {
+        List<Travel.Areas.Identity.Data.Trip> trips = PerosnTripService.GetTrips(person);
+        if (trips.Count != 0)
+        {
+            if (trips.Contains(ATrip))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    protected async Task Book()
+    {
+
+        if (await IsAuthenticated())
+        {
+            Person = await GetCurrentPerson();
+
+            if (IsPeronIsBookingThisTrip(Person))
+            {
+
+            }
+            else
+            {
+                await PerosnTripService.AddPersonTrip(Person, ATrip);
+                BookText = "Booked";
+            }
+
+        }
+        else
+        {
+            NavigationManager.NavigateTo("authorizationrequired");
+        }
+
+    }
+
+
+    protected void Unbook()
+    {
+        PerosnTripService.DeletePersonTrip(Person, ATrip);
+        BookText = "Book";
+        
+
+    }
 }
