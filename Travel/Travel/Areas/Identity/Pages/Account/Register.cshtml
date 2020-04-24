@@ -13,18 +13,18 @@
                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <div asp-validation-summary="All" class="text-danger"></div>
                     <div class="form-group">
-                        <label asp-for="Input.Email" for="name">Username</label>
-                        <input asp-for="Input.Email" class="form-control item" type="text" id="name">
+                        <label asp-for="Input.Email" for="name">Email</label>
+                        <input asp-for="Input.Email" class="form-control item" type="email" id="name">
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.Password" for="name">Username</label>
-                        <input asp-for="Input.Password" class="form-control item" type="text" id="name">
+                        <label asp-for="Input.Password" for="name">Password</label>
+                        <input asp-for="Input.Password" class="form-control item" type="password" id="name">
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Input.ConfirmPassword" for="name">Username</label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control item" type="text" id="name">
+                        <label asp-for="Input.ConfirmPassword" for="name">Confirm your password</label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control item" type="password" id="name">
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                     

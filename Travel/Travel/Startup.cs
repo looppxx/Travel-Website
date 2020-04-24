@@ -28,6 +28,17 @@ namespace Travel
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            //services.AddSignalR().AddAzureSignalR();
+            /*
+            
+            "Azure": {
+    "SignalR": {
+      "Enabled": true,
+      "ConnectionString": "Endpoint=https://wasfisignalr.service.signalr.net;AccessKey=snst57Gi3ARozPjW+qJkjIs9/e+3sSoHwtmlfjmvQp8=;Version=1.0;"
+    }
+  },
+
+            */
 
         }
 

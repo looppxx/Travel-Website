@@ -1,6 +1,8 @@
 ﻿@page "/trip/{Id}"
 @using Travel.Interfaces
 @using Travel.Areas.Identity.Data
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment  WebHostingEnviroment
 @inject NavigationManager NavigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject IPersonDataService PersonData
@@ -33,7 +35,7 @@
                 <button class="btn btn-primary btn-block btn-group-sm" @onclick="Book" type="button">@BookText</button>
                 @if (BookText == "Booked")
                 {
-                    <button class="btn btn-outline-primary btn-block" @onclick="Unbook" >Unbook</button>
+                    <button class="btn btn-outline-primary btn-block" @onclick="Unbook">Unbook</button>
                 }
             </div>
         </div>
@@ -85,7 +87,7 @@
             TripCity = ATrip.City;
             TripDate = ATrip.Date.ToString();
             TripShortDescription = ATrip.ShortDescription;
-            TripDetails = System.IO.File.ReadAllText(ATrip.Details);
+            TripDetails = System.IO.File.ReadAllText(WebHostingEnviroment.WebRootPath + ATrip.Details);
             TripPrice = ATrip.Price.ToString();
 
 
@@ -176,7 +178,7 @@
     {
         PerosnTripService.DeletePersonTrip(Person, ATrip);
         BookText = "Book";
-        
+
 
     }
 }

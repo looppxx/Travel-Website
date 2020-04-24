@@ -1,9 +1,101 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
+
+<main class="page lanidng-page">
+    <section class="portfolio-block block-intro">
+        <div class="container">
+            <div class="avatar" style="background-image:url(IMG/Logo.png);"></div>
+            <div class="about-me">
+                <p>
+                    <br><br>Travel Company is the most reputable destination management company in Egypt that builds on a unique synergy of an integrated group of companies covering all segments of the tourism trade. It offers complete solutions
+                    for the widest array of travel services including cultural, recreational, adventure, corporate, conferences and special group arrangements as well as the most exciting incentive travel packages.<br>
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio-block photography">
+        <div class="container">
+            <div class="row no-gutters">
+                <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="#"><img class="img-fluid image" src="IMG/Trips/ANTARCTICA/main.jpg"></a></div>
+                <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="#"><img class="img-fluid image" src="IMG/Trips/ANTELOPE CANYON, ARIZONA/main.jpg"></a></div>
+                <div class="col-md-6 col-lg-4 item zoom-on-hover"><a href="#"><img class="img-fluid image" src="IMG/Trips/ARASHIYAMA BAMBOO GROVE, JAPAN/main.jpg"></a></div>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio-block call-to-action border-bottom">
+        <div class="container">
+            <div class="d-flex justify-content-center align-items-center content">
+                <h3>Like what you see?</h3><button  class="btn btn-outline-primary btn-lg" type="button" @onclick="GoToTrips" >Book a trip now</button>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio-block skills">
+        <div class="container">
+            <div class="heading">
+                <h2>Special Services</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card special-skill-item border-0">
+                        <div class="card-header bg-transparent border-0">
+                            <img src="IMG/Star-icon.png" width="75" height="75" />
+                        </div>                        <div class="card-body">
+                            <h3 class="card-title">Full Service</h3>
+                            <p class="card-text">We provide laundry and shuttle services, full restaurants, large spa or fitness facilities, room-service, a concierge, and have extra staff to help with luggage.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card special-skill-item border-0">
+                        <div class="card-header bg-transparent border-0">                            
+                                <img src="IMG/Suppport-icon.png" width="75" height="75" />                          
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title"><strong>Tour guides</strong></h3>
+                            <p class="card-text">The best tour guides bring a destination to life with their passion, storytelling and wit. Guardian writers pick guides who love taking visitors beyond the obvious to shed new light on the places they call home.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card special-skill-item border-0">
+                        <div class="card-header bg-transparent border-0">
+                            <img src="IMG/Camera-icon.png" width="75" height="75" />
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">Photographer with you during the trip</h3>
+                            <p class="card-text">Just focus on enjoying your Trip , we will cover it all.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<section class="portfolio-block website gradient">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-12 col-lg-5 offset-lg-1 text">
+                <h3>Best offer this week</h3>
+                <p>Explore Rome holidays and discover the best time and places to visit. A heady mix of haunting ruins, awe-inspiring art and vibrant street life, Italy's hot-blooded..</p>
+                </div>
+                <div class="col-md-12 col-lg-5">
+                    <div class="portfolio-laptop-mockup">
+                        <div class="screen">
+                            <div class="screen-content" style="background-image:url(IMG/Trips/Rome/main.jpg);"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</section>
 
 @code{
 
-   
+    protected void GoToTrips()
+    {
+        NavigationManager.NavigateTo("trips");
+    }
 
 
 

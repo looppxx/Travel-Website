@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
@@ -15,8 +16,10 @@ using Travel.Services;
 [assembly: HostingStartup(typeof(Travel.Areas.Identity.IdentityHostingStartup))]
 namespace Travel.Areas.Identity
 {
+ 
     public class IdentityHostingStartup : IHostingStartup
     {
+
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
