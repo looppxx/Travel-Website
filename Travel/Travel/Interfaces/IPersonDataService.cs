@@ -21,5 +21,11 @@ namespace Travel.Interfaces
         /// <param name="person"></param>
         /// <returns></returns>
         void UpdatePerson(Person person);
+
+        /// <summary>
+        /// Get all people From the database
+        /// </summary>
+        /// <returns></returns>
+        Task<List<Person>> GetPeople();
     }
 }

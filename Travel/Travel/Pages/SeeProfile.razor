@@ -1,0 +1,132 @@
+﻿@page "/seeprofile/{Username}"
+@using Travel.Areas.Identity.Data
+@using Travel.Interfaces;
+@using Travel.Components;
+@inject IPersonDataService PersonData
+@inject IPersonTripDataService PerosnTripService
+
+
+<section class="portfolio-block block-intro border-bottom">
+    <div class="container">
+        <div class="about-me">
+            <p>Hello! @FistName</p>
+        </div>
+    </div>
+</section>
+<section class="portfolio-block projects-cards">
+    <div class="container">
+        <div class="heading">
+            <h2>Your booked Trips</h2>
+        </div>
+        <div class="row">
+            @if (ATrips.Count > 0)
+            {
+                @foreach (Travel.Areas.Identity.Data.Trip trip in ATrips)
+                {
+                    <div class="row-cols-md-6 col-lg-4">
+                        <TripTemplate Trip=@trip />
+                        <div style="margin-bottom:15px" />
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+</section>
+<section class="portfolio-block projects-cards">
+    <div class="container">
+        <div class="group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-info portfolio-info-card">
+                        <h2>Contact Info</h2>
+                        <div class="row">
+                            <div class="col-1">
+                                <img src="IMG/Business man-icon.png" width="25" height="25" />
+                            </div>
+                            <div class="col-9"><span>@FistName @LastName</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <img src="IMG/Contact-icon.png" width="25" height="25" />
+                            </div>
+                            <div class="col-9"><span>@PhoneNumber</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <img src="IMG/Mail-icon.png" width="25" height="25" />
+                            </div>
+                            <div class="col-9"><span>@Email</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-1">
+                                <img src="IMG/Location-icon.png" width="25" height="25" />
+                            </div>
+                            <div class="col-9"><span>@Country , @City</span></div>
+                        </div><a href="/additionalinformation">Edit your Information</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    [Parameter]
+    public string Username { get; set; }
+
+    public Person Person { get; set; }
+
+    private string FistName { get; set; }
+    private string LastName { get; set; }
+
+    private bool Male { get; set; }
+    private bool Female { get; set; }
+
+    private string Gender { get; set; }
+
+    private string PhoneNumber { get; set; }
+
+    private string Email { get; set; }
+
+    private string Country { get; set; }
+    private string City { get; set; }
+
+    private List<Travel.Areas.Identity.Data.Trip> ATrips { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Person = await PersonData.GetPerson(Username);
+
+        FistName = Person.FirstName;
+        LastName = Person.LastName;
+
+        if (Person.Gender == "Male")
+        {
+            Male = true;
+            Female = false;
+        }
+        else if (Person.Gender == "Female")
+        {
+            Male = false;
+            Female = true;
+        }
+        else
+        {
+            Male = false;
+            Female = false;
+        }
+
+        PhoneNumber = Person.PhoneNumber;
+
+        Email = Person.Email;
+
+        Country = Person.Country;
+
+        City = Person.City;
+
+        ATrips = new List<Areas.Identity.Data.Trip>();
+        ATrips = PerosnTripService.GetTrips(Person);
+    }
+
+}

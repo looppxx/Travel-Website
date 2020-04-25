@@ -18,6 +18,8 @@ namespace Travel.Services
             this.travelContext = travelContext;
         }
 
+       
+
         public async Task<Person> GetPerson(string userName)
         {
             return await travelContext.Users.FirstOrDefaultAsync(x => x.UserName == userName);
@@ -27,6 +29,11 @@ namespace Travel.Services
         {
             travelContext.Users.Update(person);
             travelContext.SaveChanges();
+        }
+
+        public async Task<List<Person>> GetPeople()
+        {
+            return await travelContext.Users.ToListAsync();
         }
     }
 }

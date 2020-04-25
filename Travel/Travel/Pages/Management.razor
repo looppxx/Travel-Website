@@ -1,0 +1,25 @@
+﻿@page "/management"
+@using Travel.Interfaces;
+@using Travel.Areas.Identity.Data
+@inject IPersonDataService PersonData
+@inject NavigationManager NavigationManager
+
+
+
+@foreach (Person person in People)
+{
+    <h6> @person.FirstName @person.LastName </h6>
+    <a href="/seeprofile/@person.UserName">@person.UserName  </a>
+   
+}
+
+
+@code {
+    public List<Person> People { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        People = await PersonData.GetPeople();
+    }
+
+}
