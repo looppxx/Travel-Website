@@ -6,8 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Travel.db" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\AppData\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +24,16 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Travel.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="T.db">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
