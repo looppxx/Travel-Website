@@ -15,26 +15,6 @@
 </section>
 <section class="portfolio-block projects-cards">
     <div class="container">
-        <div class="heading">
-            <h2>Your booked Trips</h2>
-        </div>
-        <div class="row">
-            @if (ATrips.Count > 0)
-            {
-                @foreach (Travel.Areas.Identity.Data.Trip trip in ATrips)
-                {
-                    <div class="row-cols-md-6 col-lg-4">
-                        <TripTemplate Trip=@trip />
-                        <div style="margin-bottom:15px" />
-                    </div>
-                }
-            }
-        </div>
-    </div>
-
-</section>
-<section class="portfolio-block projects-cards">
-    <div class="container">
         <div class="group">
             <div class="row">
                 <div class="col-md-6">

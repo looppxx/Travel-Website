@@ -32,11 +32,6 @@
                     <span class="meta-heading">City: @TripCity</span>
                     <span class="meta-heading">Date : @TripDate</span>
                 </div>
-                <button class="btn btn-primary btn-block btn-group-sm" @onclick="Book" type="button">@BookText</button>
-                @if (BookText == "Booked")
-                {
-                    <button class="btn btn-outline-primary btn-block" @onclick="Unbook">Unbook</button>
-                }
             </div>
         </div>
     </div>
@@ -89,28 +84,6 @@
             TripShortDescription = ATrip.ShortDescription;
             TripDetails = System.IO.File.ReadAllText(WebHostingEnviroment.WebRootPath + ATrip.Details);
             TripPrice = ATrip.Price.ToString();
-
-
-            if (await IsAuthenticated())
-            {
-                Person = await GetCurrentPerson();
-
-                if (IsPeronIsBookingThisTrip(Person))
-                {
-                    BookText = "Booked";
-                }
-                else
-                {
-                    BookText = "Book";
-
-                }
-
-            }
-            else
-            {
-                BookText = "Login to book";
-
-            }
 
         }
         else
